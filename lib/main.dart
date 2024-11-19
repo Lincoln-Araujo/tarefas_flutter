@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:dio/dio.dart';
 
 void main() => runApp(TaskApp());
 
@@ -24,16 +23,20 @@ class _TaskListScreenState extends State<TaskListScreen> {
   List _filteredTasks = [];
   bool _isLoading = true;
 
+  final Dio _dio = Dio();
+
   Future<void> _fetchTasks() async {
-    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/todos'));
-    if (response.statusCode == 200) {
-      setState(() {
-        _tasks = json.decode(response.body);
-        _filteredTasks = _tasks;
-        _isLoading = false;
-      });
-    } else {
-      throw Exception('Failed to load tasks');
+    try {
+      final response = await _dio.get('https://jsonplaceholder.typicode.com/todos');
+      if (response.statusCode == 200) {
+        setState(() {
+          _tasks = response.data;
+          _filteredTasks = _tasks;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      throw Exception('Failed to load tasks: $e');
     }
   }
 

@@ -34,5 +34,4 @@ Este é um aplicativo Flutter simples que exibe uma lista de tarefas com a funci
 ## Tecnologias usadas
 
 - Flutter: Framework principal para desenvolvimento do app
-- HTTP package: Para fazer a solicitação à API
-- FutureBuilder: Para exibir dados assíncronos na interface
+- Dio (5.7.0): Biblioteca para fazer requisições HTTP.
